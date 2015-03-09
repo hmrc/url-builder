@@ -57,6 +57,6 @@ would produce the url: "http://someserver:8080/something/value1/value2"
 Include the following dependency in your SBT build
 
 ```scala
-libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "0.3.0"
+libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "0.5.0"
 ```
 

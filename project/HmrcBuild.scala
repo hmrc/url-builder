@@ -28,7 +28,7 @@ object HmrcBuild extends Build {
   import scala.util.Properties.envOrElse
 
   val nameApp = "url-builder"
-  val appVersion = "0.5.0-SNAPSHOT"
+  val appVersion = "0.5.0"
 
   val appDependencies = Seq(
     "com.typesafe.play" %% "play" % PlayVersion.current,
@@ -45,7 +45,7 @@ object HmrcBuild extends Build {
       targetJvm := "jvm-1.7",
       shellPrompt := ShellPrompt(appVersion),
       libraryDependencies ++= appDependencies,
-      crossScalaVersions := Seq("2.11.2", "2.10.4")
+      crossScalaVersions := Seq("2.11.2")
     )
     .settings(publishAllArtefacts: _*)
     .settings(nexusPublishingSettings: _*)
