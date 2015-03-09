@@ -59,3 +59,4 @@ Include the following dependency in your SBT build
 ```scala
 libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "0.3.0"
 ```
+
