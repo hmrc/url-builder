@@ -22,10 +22,7 @@ object HmrcBuild extends Build {
 
   import _root_.play.core.PlayVersion
   import uk.gov.hmrc.DefaultBuildSettings._
-  import uk.gov.hmrc.NexusPublishing._
-  import uk.gov.hmrc.PublishingSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
-  import scala.util.Properties.envOrElse
 
   val nameApp = "url-builder"
   val appVersion = "0.5.0"
@@ -38,17 +35,51 @@ object HmrcBuild extends Build {
 
   lazy val urlBuilder = (project in file("."))
     .settings(version := appVersion)
-    .settings(name := nameApp)
     .settings(scalaSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
       targetJvm := "jvm-1.7",
       shellPrompt := ShellPrompt(appVersion),
       libraryDependencies ++= appDependencies,
-      crossScalaVersions := Seq("2.11.2")
+      resolvers := Seq(
+        Opts.resolver.sonatypeReleases,
+        Opts.resolver.sonatypeSnapshots,
+        "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/",
+        "typesafe-snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"
+      ),
+      crossScalaVersions := Seq("2.11.5")
     )
-    .settings(publishAllArtefacts: _*)
-    .settings(nexusPublishingSettings: _*)
     .settings(SbtBuildInfo(): _*)
+    .settings(SonatypeBuild(): _*)
+}
 
+
+object SonatypeBuild {
+
+  import xerial.sbt.Sonatype._
+
+  def apply() = {
+    sonatypeSettings ++ Seq(
+      pomExtra :=
+        <url>https://www.gov.uk/government/organisations/hm-revenue-customs</url>
+          <licenses>
+            <license>
+              <name>Apache 2</name>
+              <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            </license>
+          </licenses>
+          <scm>
+            <connection>scm:git@github.com:hmrc/url-builder.git</connection>
+            <developerConnection>scm:git@github.com:hmrc/url-builder.git</developerConnection>
+            <url>git@github.com:hmrc/url-builder.git</url>
+          </scm>
+          <developers>
+            <developer>
+              <id>steve-e</id>
+              <name>Steve Etherington</name>
+              <url>http://www.equalexperts.com/</url>
+            </developer>
+          </developers>
+    )
+  }
 }
