@@ -28,7 +28,7 @@ object HmrcBuild extends Build {
   import scala.util.Properties.envOrElse
 
   val nameApp = "url-builder"
-  val versionApp = envOrElse("URL_BUILDER_VERSION", "999-SNAPSHOT")
+  val appVersion = "0.5.0-SNAPSHOT"
 
   val appDependencies = Seq(
     "com.typesafe.play" %% "play" % PlayVersion.current,
@@ -37,13 +37,13 @@ object HmrcBuild extends Build {
   )
 
   lazy val urlBuilder = (project in file("."))
-    .settings(version := versionApp)
+    .settings(version := appVersion)
     .settings(name := nameApp)
     .settings(scalaSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
       targetJvm := "jvm-1.7",
-      shellPrompt := ShellPrompt(versionApp),
+      shellPrompt := ShellPrompt(appVersion),
       libraryDependencies ++= appDependencies,
       crossScalaVersions := Seq("2.11.2", "2.10.4")
     )
