@@ -24,7 +24,6 @@ object HmrcBuild extends Build {
   import uk.gov.hmrc.DefaultBuildSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
-  val nameApp = "url-builder"
   val appVersion = "0.5.0"
 
   val appDependencies = Seq(
@@ -33,7 +32,7 @@ object HmrcBuild extends Build {
     "org.pegdown" % "pegdown" % "1.4.2" % "test"
   )
 
-  lazy val urlBuilder = (project in file("."))
+  lazy val `url-builder` = (project in file("."))
     .settings(version := appVersion)
     .settings(scalaSettings: _*)
     .settings(defaultSettings(): _*)
