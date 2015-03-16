@@ -16,18 +16,16 @@ limitations under the License.
 URL Builder
 ===========
 
-A micro-library for building URLs from templates and tags.
+Micro-library for building URLs from templates and tags.
 
-1. Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object:
-
+* Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object: 
 ```scala
 Links.toInternalPage            // No SSO, Same Window
 Links.toExternalPage            // No SSO, New Window
 Links.toPortalPage              // Client-based SSO, Same Window
 Links.toInternalPageWithSso     // Server-based SSO, Same Window
 ```
-
-2. Construct parametrized urls based on the tags and corresponding values provided.
+* Constructs parametrized urls based on the tags and corresponding values provided.
 
 ## Usage
 
@@ -49,14 +47,16 @@ UrlBuilder.buildUrl("http://server:8080/something/<tag1>/<tag2>",
                      Seq("<tag1>"->Some("value1"), "<tag2>"->Some("value2"))
                     )
 ```
-would produce the url: "http://someserver:8080/something/value1/value2"
+would produce the url: `http://someserver:8080/something/value1/value2`
 
 
-##Adding to your service
+## Adding to your service
 
 Include the following dependency in your SBT build
 
 ```scala
+resolvers += Resolver.bintrayRepo("hmrc", "releases")
+
 libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "0.5.0"
 ```
 
