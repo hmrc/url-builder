@@ -28,7 +28,7 @@ object HmrcBuild extends Build {
   val appVersion = "0.5.0-SNAPSHOT"
 
   val appDependencies = Seq(
-    "com.typesafe.play" %% "play" % PlayVersion.current,
+    "com.typesafe.play" %% "play" % PlayVersion.current % "provided",
     "org.scalatest" %% "scalatest" % "2.2.4" % "test",
     "org.pegdown" % "pegdown" % "1.4.2" % "test"
   )
