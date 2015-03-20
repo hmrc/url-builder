@@ -22,12 +22,14 @@ import play.api.i18n.Messages
 trait Target {
   protected val targetName: String
   def toAttr = Link.attr("target", targetName)
+  def titlePostfix = ""
 }
 case object SameWindow extends Target {
   override val targetName = "_self"
 }
 case object NewWindow extends Target {
   override val targetName = "_blank"
+  override val titlePostfix = " (opens in new window)"
 }
 
 trait PossibleSso {
@@ -50,12 +52,19 @@ case class Link(url: String,
                 target: Target = SameWindow,
                 sso: PossibleSso = NoSso,
                 cssClasses: Option[String] = None,
-                dataAttributes: Option[Map[String, String]] = None) {
+                dataAttributes: Option[Map[String, String]] = None,
+                title: Option[String] = None) {
 
   import Link._
 
   private def hrefAttr = attr("href", url)
   private def idAttr = id.map(attr("id", _)).getOrElse("")
+
+  private def titleAttr = title match {
+    case Some(title) => attr("title", title)
+    case _ => value.map(v => attr("title", s"${Messages(v)}${target.titlePostfix}")).getOrElse("")
+  }
+
   private def text = value.map(v => Messages(v)).getOrElse("")
   private def cssAttr = cssClasses.map(attr("class", _)).getOrElse("")
   private def dataAttr = buildAttributeString(dataAttributes)
@@ -70,7 +79,7 @@ case class Link(url: String,
     }
   }
 
-  def toHtml = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr>$text</a>")
+  def toHtml = Html(s"<a$idAttr$titleAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr>$text</a>")
 }
 
 object Link {
@@ -80,8 +89,8 @@ object Link {
   def attr(name: String, value: String) = s""" $name="${escape(value)}""""
 
   case class PreconfiguredLink(sso: PossibleSso, target: Target) {
-    def apply(url: String, value: Option[String], id: Option[String] = None, cssClasses: Option[String] = None, dataAttributes: Option[Map[String, String]] = None) =
-      Link(url, value, id, target, sso, cssClasses, dataAttributes)
+    def apply(url: String, value: Option[String], id: Option[String] = None, cssClasses: Option[String] = None, dataAttributes: Option[Map[String, String]] = None, title: Option[String] = None) =
+      Link(url, value, id, target, sso, cssClasses, dataAttributes, title)
   }
 
   def toInternalPage = PreconfiguredLink(NoSso, SameWindow)

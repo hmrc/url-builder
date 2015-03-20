@@ -46,7 +46,7 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
         cssClasses = Some("link-style blink"))
 
       Then("the link should be rendered with id and styles")
-      portalLink.toHtml.toString() shouldBe "<a id=\"link-id\" href=\"https://someurl\" target=\"_self\" data-sso=\"client\" class=\"link-style blink\">link text</a>"
+      portalLink.toHtml.toString() shouldBe "<a id=\"link-id\" title=\"link text\" href=\"https://someurl\" target=\"_self\" data-sso=\"client\" class=\"link-style blink\">link text</a>"
 
     }
 
@@ -59,7 +59,20 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
       val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = value)
 
       Then("the link should be rendered in the same way")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"client\">Pay &pound;4,000 now - it's due</a>"
+      portalLink.toHtml.toString() shouldBe """<a title="Pay &amp;pound;4,000 now - it&#x27;s due" href="https://someurl" target="_self" data-sso="client">Pay &pound;4,000 now - it's due</a>"""
+
+    }
+
+    it("be created with the title when specified") {
+
+      Given("the title value is 'my title'")
+      val title = Some("my title")
+
+      When("portal page link is created")
+      val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = None, title = title)
+
+      Then("the link should have title")
+      portalLink.toHtml.toString() shouldBe """<a title="my title" href="https://someurl" target="_self" data-sso="client"></a>"""
 
     }
   }
@@ -127,6 +140,19 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
 
       Then("the link should be rendered with no sso in a new window")
       portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_blank\" data-sso=\"false\"></a>"
+
+    }
+
+    it("be created with title including new window prompt for screen readers") {
+
+      Given("the link value attribute as 'Pay &pound;4,000 now - it's due'")
+      val value = Some("Pay £4,000 now - it's due")
+
+      When("external page link is created")
+      val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = value)
+
+      Then("the link should be rendered with title including a new window prompt")
+      portalLink.toHtml.toString() shouldBe "<a title=\"Pay £4,000 now - it&#x27;s due (opens in new window)\" href=\"https://someurl\" target=\"_blank\" data-sso=\"false\">Pay £4,000 now - it's due</a>"
 
     }
   }
