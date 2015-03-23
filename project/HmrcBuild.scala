@@ -24,7 +24,7 @@ object HmrcBuild extends Build {
   import uk.gov.hmrc.DefaultBuildSettings._
   import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
-  val appVersion = "0.6.0-SNAPSHOT"
+  val appVersion = "0.6.0"
 
   val appDependencies = Seq(
     "com.typesafe.play" %% "play" % PlayVersion.current % "provided",

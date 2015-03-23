@@ -59,7 +59,20 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
       val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = value)
 
       Then("the link should be rendered in the same way")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"client\">Pay &pound;4,000 now - it's due</a>"
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client">Pay &pound;4,000 now - it's due</a>"""
+
+    }
+
+    it("be created with the hidden info span when specified") {
+
+      Given("the hiddenInfo value is 'my hiddenInfo'")
+      val hiddenInfo = Some("my hiddenInfo")
+
+      When("portal page link is created")
+      val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = None, hiddenInfo = hiddenInfo)
+
+      Then("the link should have hidden span")
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client"><span class="hidden">my hiddenInfo</span></a>"""
 
     }
   }
@@ -126,7 +139,20 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
       val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered with no sso in a new window")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_blank\" data-sso=\"false\"></a>"
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false"><span class="hidden">link opens in a new window</span></a>"""
+
+    }
+
+    it("be created with hidden info span for screen readers") {
+
+      Given("the link value attribute as 'Pay &pound;4,000 now - it's due'")
+      val value = Some("Pay £4,000 now - it's due")
+
+      When("external page link is created")
+      val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = value)
+
+      Then("the link should be rendered with title including a new window prompt")
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false">Pay £4,000 now - it's due<span class="hidden">link opens in a new window</span></a>"""
 
     }
   }
