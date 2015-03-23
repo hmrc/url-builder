@@ -16,6 +16,8 @@ limitations under the License.
 URL Builder
 ===========
 
+[![Build Status](https://travis-ci.org/hmrc/url-builder.svg?branch=master)](https://travis-ci.org/hmrc/url-builder)
+
 Micro-library for building URLs from templates and tags.
 
 * Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object: 
