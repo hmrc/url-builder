@@ -63,7 +63,7 @@ case class Link(url: String,
   private def text = value.map(v => Messages(v)).getOrElse("")
   private def cssAttr = cssClasses.map(attr("class", _)).getOrElse("")
   private def dataAttr = buildAttributeString(dataAttributes)
-  private def hiddenSpanFor(txt: Option[String]) = txt.map(t => s"""<span class="hidden">${Messages(t)}</span>""").getOrElse("")
+  private def hiddenSpanFor(txt: Option[String]) = txt.map(t => s"""<span class="visuallyhidden">${Messages(t)}</span>""").getOrElse("")
 
   def buildAttributeString(attributes: Option[Map[String, String]]): String = {
     attributes match {
