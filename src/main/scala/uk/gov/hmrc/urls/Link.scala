@@ -64,6 +64,7 @@ case class Link(url: String,
   private def cssAttr = cssClasses.map(attr("class", _)).getOrElse("")
   private def dataAttr = buildAttributeString(dataAttributes)
   private def hiddenSpanFor(txt: Option[String]) = txt.map(t => s"""<span class="visuallyhidden">${Messages(t)}</span>""").getOrElse("")
+  private def relAttr = if(target == NewWindow) attr("rel", "external") else ""
 
   def buildAttributeString(attributes: Option[Map[String, String]]): String = {
     attributes match {
@@ -77,7 +78,7 @@ case class Link(url: String,
 
   val hiddenLink = hiddenSpanFor(hiddenInfo.orElse(target.hiddenInfo))
 
-  def toHtml = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr>$text$hiddenLink</a>")
+  def toHtml = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr$relAttr>$text$hiddenLink</a>")
 }
 
 object Link {
