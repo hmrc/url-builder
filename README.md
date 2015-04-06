@@ -16,7 +16,7 @@ limitations under the License.
 URL Builder
 ===========
 
-[![Build Status](https://travis-ci.org/hmrc/url-builder.svg?branch=master)](https://travis-ci.org/hmrc/url-builder)
+[![Build Status](https://travis-ci.org/hmrc/url-builder.svg?branch=master)](https://travis-ci.org/hmrc/url-builder) [ ![Download](https://api.bintray.com/packages/hmrc/releases/url-builder/images/download.svg) ](https://bintray.com/hmrc/releases/url-builder/_latestVersion)
 
 Micro-library for building URLs from templates and tags.
 
@@ -59,6 +59,6 @@ Include the following dependency in your SBT build
 ```scala
 resolvers += Resolver.bintrayRepo("hmrc", "releases")
 
-libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "0.5.0"
+libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "x.x.x"
 ```
 
