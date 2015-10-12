@@ -34,7 +34,6 @@ object HmrcBuild extends Build {
   lazy val `url-builder` = (project in file("."))
     .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
     .settings(
-      targetJvm := "jvm-1.7",
       libraryDependencies ++= appDependencies,
       resolvers := Seq(
         Resolver.bintrayRepo("hmrc", "releases"),
