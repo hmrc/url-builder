@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 HM Revenue & Customs
+ * Copyright 2016 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -139,7 +139,7 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
       val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered with no sso in a new window")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external"><span class="visuallyhidden">link opens in a new window</span></a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer"><span class="visuallyhidden">link opens in a new window</span></a>"""
 
     }
 
@@ -152,7 +152,7 @@ class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers {
       val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = value)
 
       Then("the link should be rendered with title including a new window prompt")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external">Pay £4,000 now - it's due<span class="visuallyhidden">link opens in a new window</span></a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer">Pay £4,000 now - it's due<span class="visuallyhidden">link opens in a new window</span></a>"""
 
     }
   }
