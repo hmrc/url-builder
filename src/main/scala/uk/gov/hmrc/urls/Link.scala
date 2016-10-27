@@ -53,7 +53,7 @@ case class Link(url: String,
                 sso: PossibleSso = NoSso,
                 cssClasses: Option[String] = None,
                 dataAttributes: Option[Map[String, String]] = None,
-                hiddenInfo: Option[String] = None) {
+                hiddenInfo: Option[String] = None)(implicit messages: Messages) {
 
   import uk.gov.hmrc.urls.Link._
 
@@ -88,7 +88,13 @@ object Link {
   def attr(name: String, value: String) = s""" $name="${escape(value)}""""
 
   case class PreconfiguredLink(sso: PossibleSso, target: Target) {
-    def apply(url: String, value: Option[String], id: Option[String] = None, cssClasses: Option[String] = None, dataAttributes: Option[Map[String, String]] = None, hiddenInfo: Option[String] = None) =
+    def apply(url: String,
+              value: Option[String],
+              id: Option[String] = None,
+              cssClasses: Option[String] = None,
+              dataAttributes: Option[Map[String, String]] = None,
+              hiddenInfo: Option[String] = None)
+             (implicit messages: Messages) =
       Link(url, value, id, target, sso, cssClasses, dataAttributes, hiddenInfo)
   }
 

@@ -35,12 +35,11 @@ trait UrlBuilder {
     val (tagName, tagValueOption) = tags
     tagValueOption match {
       case Some(valueOfTag) => url.replace(tagName, valueOfTag.toString)
-      case _ => {
+      case _ =>
         if (url.contains(tagName)) {
           Logger.error(s"Failed to populate parameter $tagName in URL $url")
         }
         url
-      }
     }
   }
 }

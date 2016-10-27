@@ -16,19 +16,18 @@
 
 import sbt.Keys._
 import sbt._
-import uk.gov.hmrc.versioning.SbtGitVersioning
 import uk.gov.hmrc.SbtAutoBuildPlugin
+import uk.gov.hmrc.versioning.SbtGitVersioning
 
 object HmrcBuild extends Build {
 
   import _root_.play.core.PlayVersion
-  import uk.gov.hmrc.DefaultBuildSettings._
-  import uk.gov.hmrc.{SbtBuildInfo, ShellPrompt}
 
   val appDependencies = Seq(
-    "com.typesafe.play" %% "play" % PlayVersion.current % "provided",
-    "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-    "org.pegdown" % "pegdown" % "1.4.2" % "test"
+    "com.typesafe.play"        %% "play"               % PlayVersion.current % "provided",
+    "org.scalatest"            %% "scalatest"          % "2.2.4" % "test",
+    "org.scalatestplus.play"   %% "scalatestplus-play" % "1.5.1" % "test",
+    "org.pegdown"              % "pegdown"             % "1.4.2" % "test"
   )
 
   lazy val `url-builder` = (project in file("."))
