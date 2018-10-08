@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2018 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import play.twirl.api.{Html, HtmlFormat}
 
 trait Target {
   protected val targetName: String
-  def toAttr = Link.attr("target", targetName)
+  def toAttr: String = Link.attr("target", targetName)
   def hiddenInfo: Option[String] = None
 }
 case object SameWindow extends Target {
@@ -34,7 +34,7 @@ case object NewWindow extends Target {
 
 trait PossibleSso {
   protected val value: String
-  def toAttr = Link.attr("data-sso", value)
+  def toAttr: String = Link.attr("data-sso", value)
 }
 case object NoSso extends PossibleSso {
   override val value = "false"
@@ -70,22 +70,22 @@ case class Link(url: String,
     attributes match {
       case Some(attributeMap) => attributeMap.foldLeft("") {
         (result, attr) =>
-          result + " data-" + attr._1 + "=" +s""""${attr._2 }""""
+          result + " data-" + attr._1 + "=" + s""""${attr._2 }""""
       }
       case None => ""
     }
   }
 
-  val hiddenLink = hiddenSpanFor(hiddenInfo.orElse(target.hiddenInfo))
+  val hiddenLink: String = hiddenSpanFor(hiddenInfo.orElse(target.hiddenInfo))
 
-  def toHtml = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr$relAttr>$text$hiddenLink</a>")
+  def toHtml: Html = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr$relAttr>$text$hiddenLink</a>")
 }
 
 object Link {
 
   private def escape(str: String) = HtmlFormat.escape(str).toString()
 
-  def attr(name: String, value: String) = s""" $name="${escape(value)}""""
+  def attr(name: String, value: String): String = s""" $name="${escape(value)}""""
 
   case class PreconfiguredLink(sso: PossibleSso, target: Target) {
     def apply(url: String,
@@ -94,16 +94,16 @@ object Link {
               cssClasses: Option[String] = None,
               dataAttributes: Option[Map[String, String]] = None,
               hiddenInfo: Option[String] = None)
-             (implicit messages: Messages) =
+             (implicit messages: Messages): Link =
       Link(url, value, id, target, sso, cssClasses, dataAttributes, hiddenInfo)
   }
 
-  def toInternalPage = PreconfiguredLink(NoSso, SameWindow)
+  def toInternalPage: PreconfiguredLink = PreconfiguredLink(NoSso, SameWindow)
 
-  def toExternalPage = PreconfiguredLink(NoSso, NewWindow)
+  def toExternalPage: PreconfiguredLink = PreconfiguredLink(NoSso, NewWindow)
 
-  def toPortalPage = PreconfiguredLink(ClientSso, SameWindow)
+  def toPortalPage: PreconfiguredLink = PreconfiguredLink(ClientSso, SameWindow)
 
-  def toInternalPageWithSso = PreconfiguredLink(ServerSso, SameWindow)
+  def toInternalPageWithSso: PreconfiguredLink = PreconfiguredLink(ServerSso, SameWindow)
 
 }

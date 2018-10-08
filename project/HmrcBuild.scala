@@ -18,10 +18,13 @@ import sbt.Keys._
 import sbt._
 import uk.gov.hmrc.SbtAutoBuildPlugin
 import uk.gov.hmrc.versioning.SbtGitVersioning
+import uk.gov.hmrc.SbtArtifactory
 
 object HmrcBuild extends Build {
 
   import _root_.play.core.PlayVersion
+  import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
+  import uk.gov.hmrc.SbtArtifactory.autoImport.makePublicallyAvailableOnBintray
 
   val appDependencies = Seq(
     "com.typesafe.play"        %% "play"               % PlayVersion.current % "provided",
@@ -31,7 +34,9 @@ object HmrcBuild extends Build {
   )
 
   lazy val `url-builder` = (project in file("."))
-    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning)
+    .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
+    .settings(majorVersion := 3)
+    .settings(makePublicallyAvailableOnBintray := true)
     .settings(
       libraryDependencies ++= appDependencies,
       resolvers := Seq(
