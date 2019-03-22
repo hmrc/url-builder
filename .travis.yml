@@ -1,14 +1,22 @@
 # Use docker-based build environment (instead of openvz)
 sudo: false
 language: scala
-scala:
-- 2.11.6
 jdk:
 - oraclejdk8
+
+matrix:
+  include:
+    - scala: 2.11.12
+      env: PLAY_VERSION=2.5
+    - scala: 2.11.12
+      env: PLAY_VERSION=2.6
+    - scala: 2.12.8
+      env: PLAY_VERSION=2.6
 
 cache:
   directories:
     - '$HOME/.ivy2/cache'
+    - '$HOME/.sbt'
 
 notifications:
   webhooks:
