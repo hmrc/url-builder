@@ -28,8 +28,8 @@ object HmrcBuild extends Build {
 
   val appDependencies = Seq(
     "com.typesafe.play"        %% "play"               % PlayVersion.current % "provided",
-    "org.scalatest"            %% "scalatest"          % "2.2.6" % "test",
-    "org.scalatestplus.play"   %% "scalatestplus-play" % "1.5.1" % "test",
+    "org.scalatest"            %% "scalatest"          % "3.0.7" % "test",
+    "org.scalatestplus.play"   %% "scalatestplus-play" % "3.0.0" % "test",
     "org.pegdown"              % "pegdown"             % "1.4.2" % "test"
   )
 
