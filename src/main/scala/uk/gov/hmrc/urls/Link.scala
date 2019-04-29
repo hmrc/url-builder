@@ -60,7 +60,14 @@ case class Link(url: String,
   private def hrefAttr = attr("href", url)
   private def idAttr = id.map(attr("id", _)).getOrElse("")
 
-  private def text = value.map(v => Messages(v)).getOrElse("")
+  private def text = value.map{
+    v =>
+      println("\n \n\n\n\n\n\nHEYheyhey\n\n\n\n\n\n\n")
+      messages(v)
+  }.getOrElse{
+    println("\n\n\n\n\n\n\nHEYgefdsfs\n\n\n\n\n\n\n")
+    ""
+  }
   private def cssAttr = cssClasses.map(attr("class", _)).getOrElse("")
   private def dataAttr = buildAttributeString(dataAttributes)
   private def hiddenSpanFor(txt: Option[String]) = txt.map(t => s"""<span class="visuallyhidden">${Messages(t)}</span>""").getOrElse("")
