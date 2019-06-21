@@ -18,10 +18,15 @@ package uk.gov.hmrc.urls
 
 import org.scalatest._
 import org.scalatestplus.play.OneServerPerSuite
+import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.AnyContentAsEmpty
+import play.api.test.FakeRequest
 
-class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers with OneServerPerSuite {
+class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers with OneServerPerSuite with I18nSupport {
 
-  import play.api.i18n.Messages.Implicits._
+  implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
+
+  implicit val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
 
   describe("portal page link should") {
 
