@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.urls
 
-import org.scalatest._
+import org.scalatest.{GivenWhenThen, OptionValues}
+import org.scalatest.funspec.AnyFunSpecLike
+import org.scalatest.matchers.should.Matchers
 
-class UrlBuilderSpec extends FunSpecLike with Matchers with OptionValues with GivenWhenThen {
+class UrlBuilderSpec extends AnyFunSpecLike with Matchers with OptionValues with GivenWhenThen {
 
   describe("build url processes a URL template") {
 
