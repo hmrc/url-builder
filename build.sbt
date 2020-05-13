@@ -22,7 +22,7 @@ lazy val `url-builder` = (project in file("."))
     ),
     resolvers := Seq(
       Resolver.bintrayRepo("hmrc", "releases"),
-      "typesafe-releases" at "http://repo.typesafe.com/typesafe/releases/"
+      "typesafe-releases" at "https://repo.typesafe.com/typesafe/releases/"
     ),
     crossScalaVersions := Seq("2.11.6", "2.12.8")
   ).settings(PlayCrossCompilation.playCrossCompilationSettings)
