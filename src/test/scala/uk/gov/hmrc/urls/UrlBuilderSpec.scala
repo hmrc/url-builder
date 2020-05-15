@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 
 package uk.gov.hmrc.urls
 
-import org.scalatest._
+import org.scalatest.{GivenWhenThen, OptionValues}
+import org.scalatest.funspec.AnyFunSpecLike
+import org.scalatest.matchers.should.Matchers
 
-class UrlBuilderSpec extends FunSpecLike with Matchers with OptionValues with GivenWhenThen {
+class UrlBuilderSpec extends AnyFunSpecLike with Matchers with OptionValues with GivenWhenThen {
 
   describe("build url processes a URL template") {
 

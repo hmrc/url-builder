@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import scala.annotation.tailrec
 
 trait UrlBuilder {
 
+  val logger = Logger("application")
+
   def buildUrl(destinationUrl: String, tags: Seq[(String, Option[Any])]): String = {
     resolvePlaceHolder(destinationUrl, tags)
   }
@@ -37,7 +39,7 @@ trait UrlBuilder {
       case Some(valueOfTag) => url.replace(tagName, valueOfTag.toString)
       case _ =>
         if (url.contains(tagName)) {
-          Logger.error(s"Failed to populate parameter $tagName in URL $url")
+          logger.error(s"Failed to populate parameter $tagName in URL $url")
         }
         url
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,15 @@
 
 package uk.gov.hmrc.urls
 
-import org.scalatest._
-import org.scalatestplus.play.OneServerPerSuite
+import org.scalatest.GivenWhenThen
+import org.scalatest.funspec.AnyFunSpecLike
+import org.scalatest.matchers.should.Matchers
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 
-class LinkSpec extends FunSpecLike with GivenWhenThen with Matchers with OneServerPerSuite with I18nSupport {
+class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with GuiceOneServerPerSuite with I18nSupport {
 
   implicit val request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
