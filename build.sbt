@@ -1,34 +1,27 @@
-
+import play.core.PlayVersion
 
 lazy val `url-builder` = (project in file("."))
-  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
-  .settings(majorVersion := 3)
-  .settings(scalaVersion := "2.12.10")
+  .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
+  .disablePlugins(PlayLayoutPlugin)
+  .settings(majorVersion := 4)
+  .settings(scalaVersion := "2.12.13")
   .settings(makePublicallyAvailableOnBintray := true)
   .settings(
     libraryDependencies ++= PlayCrossCompilation.dependencies(
       shared = Seq(
-        "org.scalatest"            %% "scalatest"          % "3.1.1"    % "test",
-        "com.vladsch.flexmark"     %  "flexmark-all"       % "0.35.10"  % "test"
-      ),
-      play25 = Seq(
-        "com.typesafe.play"        %% "play"               % "2.5.19",
-        "org.scalatestplus.play"   %% "scalatestplus-play" % "2.0.1"    % "test"
+        "com.typesafe.play"        %% "play"               % PlayVersion.current,
+        "com.typesafe.play"        %% "play-guice"         % PlayVersion.current,
+        "org.scalatest"            %% "scalatest"          % "3.2.3"             % "test",
+        "com.vladsch.flexmark"     %  "flexmark-all"       % "0.36.8"            % "test"
       ),
       play26 = Seq(
-        "com.typesafe.play"        %% "play"               % "2.6.20",
-        "com.typesafe.play"        %% "play-guice"         % "2.6.20",
-        "org.scalatestplus.play"   %% "scalatestplus-play" % "3.1.2"    % "test"
+        "org.scalatestplus.play"   %% "scalatestplus-play" % "3.1.2"             % "test"
       ),
       play27 = Seq(
-        "com.typesafe.play"        %% "play"               % "2.7.4",
-        "com.typesafe.play"        %% "play-guice"         % "2.7.4",
-        "org.scalatestplus.play"   %% "scalatestplus-play" % "4.0.3"    % "test"
+        "org.scalatestplus.play"   %% "scalatestplus-play" % "4.0.3"             % "test"
+      ),
+      play28 = Seq(
+        "org.scalatestplus.play"   %% "scalatestplus-play" % "5.0.0"             % "test"
       )
-    ),
-    resolvers := Seq(
-      Resolver.bintrayRepo("hmrc", "releases"),
-      "typesafe-releases" at "https://repo.typesafe.com/typesafe/releases/"
-    ),
-    crossScalaVersions := Seq("2.11.12", "2.12.10")
+    )
   ).settings(PlayCrossCompilation.playCrossCompilationSettings)
