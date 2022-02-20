@@ -20,7 +20,7 @@ URL Builder
 
 Micro-library for building URLs from templates and tags.
 
-* Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object: 
+* Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object:
 ```scala
 Links.toInternalPage            // No SSO, Same Window
 Links.toExternalPage            // No SSO, New Window
@@ -36,8 +36,8 @@ Links.toInternalPageWithSso     // Server-based SSO, Same Window
 ```scala
 @import uk.gov.hmrc.urls.Link
 <li>
-  @{Link.toPortalPage(id = Some("link-id"), 
-                      url = "http://someserver:8080/something", 
+  @{Link.toPortalPage(id = Some("link-id"),
+                      url = "http://someserver:8080/something",
                       value = Some("Placeholder text displayed for the link")).toHtml}
 </li>
 ```
@@ -62,7 +62,23 @@ resolvers += Resolver.bintrayRepo("hmrc", "releases")
 libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "x.x.x"
 ```
 
-## License ##
- 
-This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
+## Run the tests and sbt fmt before raising a PR
 
+Format:
+
+`sbt fmt`
+
+Then run the tests and coverage report:
+
+`sbt clean coverage test coverageReport`
+
+If your build fails due to poor test coverage, *DO NOT* lower the test coverage threshold, instead inspect the generated report located here on your local repo: `/target/scala-2.12/scoverage-report/index.html`
+
+Then run the integration tests:
+
+`sbt it:test`
+
+
+## License ##
+
+This code is open source software licensed under the [Apache 2.0 License]("http://www.apache.org/licenses/LICENSE-2.0.html").
