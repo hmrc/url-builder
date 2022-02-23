@@ -1,9 +1,8 @@
 
 lazy val `url-builder` = (project in file("."))
-  .enablePlugins(SbtAutoBuildPlugin, SbtGitVersioning, SbtArtifactory)
   .settings(majorVersion := 3)
   .settings(scalaVersion := "2.12.13")
-  .settings(makePublicallyAvailableOnBintray := true)
+  .settings(isPublicArtefact := true)
   .settings(
     libraryDependencies ++= PlayCrossCompilation.dependencies(
       shared = Seq(
@@ -27,4 +26,6 @@ lazy val `url-builder` = (project in file("."))
         "org.scalatestplus.play"   %% "scalatestplus-play"    % "5.0.0"   % Test
       )
     )
-  ).settings(PlayCrossCompilation.playCrossCompilationSettings)
+  )
+  .settings(PlayCrossCompilation.playCrossCompilationSettings)
+  .settings(ScoverageSettings())
