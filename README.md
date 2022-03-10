@@ -16,8 +16,6 @@ limitations under the License.
 URL Builder
 ===========
 
-[![Build Status](https://travis-ci.org/hmrc/url-builder.svg?branch=master)](https://travis-ci.org/hmrc/url-builder) [ ![Download](https://api.bintray.com/packages/hmrc/releases/url-builder/images/download.svg) ](https://bintray.com/hmrc/releases/url-builder/_latestVersion)
-
 Micro-library for building URLs from templates and tags.
 
 * Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object:
@@ -57,10 +55,12 @@ would produce the url: `http://someserver:8080/something/value1/value2`
 Include the following dependency in your SBT build
 
 ```scala
-resolvers += Resolver.bintrayRepo("hmrc", "releases")
+resolvers += "HMRC-open-artefacts-maven2" at "https://open.artefacts.tax.service.gov.uk/maven2"
 
-libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "x.x.x"
+libraryDependencies += "uk.gov.hmrc" %% "url-builder" % "x.x.x-play-yy"
 ```
+
+Note, from version `3.6.0`, only Play 2.8 is supported.
 
 ## Run the tests and sbt fmt before raising a PR
 
@@ -73,10 +73,6 @@ Then run the tests and coverage report:
 `sbt clean coverage test coverageReport`
 
 If your build fails due to poor test coverage, *DO NOT* lower the test coverage threshold, instead inspect the generated report located here on your local repo: `/target/scala-2.12/scoverage-report/index.html`
-
-Then run the integration tests:
-
-`sbt it:test`
 
 
 ## License ##
