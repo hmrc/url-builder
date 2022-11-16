@@ -40,7 +40,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered without a value")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"client\"></a>"
+      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"client\" lang=\"en\"></a>"
 
     }
 
@@ -56,7 +56,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
         cssClasses = Some("link-style blink"))
 
       Then("the link should be rendered with id and styles")
-      portalLink.toHtml.toString() shouldBe "<a id=\"link-id\" href=\"https://someurl\" target=\"_self\" data-sso=\"client\" class=\"link-style blink\">link text</a>"
+      portalLink.toHtml.toString() shouldBe "<a id=\"link-id\" href=\"https://someurl\" target=\"_self\" data-sso=\"client\" class=\"link-style blink\" lang=\"en\">link text</a>"
 
     }
 
@@ -69,7 +69,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = value)
 
       Then("the link should be rendered in the same way")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client">Pay &pound;4,000 now - it's due</a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client" lang="en">Pay &pound;4,000 now - it's due</a>"""
 
     }
 
@@ -82,7 +82,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toPortalPage.apply(url = "https://someurl", value = None, hiddenInfo = hiddenInfo)
 
       Then("the link should have hidden span")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client"><span class="visuallyhidden">my hiddenInfo</span></a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_self" data-sso="client" lang="en"><span class="visuallyhidden">my hiddenInfo</span></a>"""
 
     }
   }
@@ -96,7 +96,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toInternalPage.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered with no sso in the same window")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\"></a>"
+      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" lang=\"en\"></a>"
 
     }
 
@@ -109,7 +109,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val linkWithDataAttr = Link.toInternalPage.apply(url = "https://someurl", value = None, dataAttributes = data)
 
       Then("the link should render with data attribute")
-      linkWithDataAttr.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" data-some=\"test\"></a>"
+      linkWithDataAttr.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" data-some=\"test\" lang=\"en\"></a>"
     }
 
     it("be created with multiple data attributes") {
@@ -121,7 +121,19 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val linkWithDataAttr = Link.toInternalPage.apply(url = "https://someurl", value = None, dataAttributes = data)
 
       Then("the link should render with data attribute")
-      linkWithDataAttr.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" data-some1=\"test1\" data-some2=\"test2\"></a>"
+      linkWithDataAttr.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" data-some1=\"test1\" data-some2=\"test2\" lang=\"en\"></a>"
+    }
+
+    it("be created with lang attribute as cy for welsh") {
+
+      Given("the link has lang attribute supplied")
+
+      When("internal page link is created")
+      val portalLink = Link.toInternalPage.apply(url = "https://someurl", value = None, lang = Cy)
+
+      Then("the link should be rendered with lang attribute as cy")
+      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"false\" lang=\"cy\"></a>"
+
     }
   }
 
@@ -135,7 +147,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toInternalPageWithSso.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered with no sso in a new window")
-      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"server\"></a>"
+      portalLink.toHtml.toString() shouldBe "<a href=\"https://someurl\" target=\"_self\" data-sso=\"server\" lang=\"en\"></a>"
 
     }
   }
@@ -149,7 +161,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = None)
 
       Then("the link should be rendered with no sso in a new window")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer"><span class="visuallyhidden">link opens in a new window</span></a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer" lang="en"><span class="visuallyhidden">link opens in a new window</span></a>"""
 
     }
 
@@ -162,7 +174,7 @@ class LinkSpec extends AnyFunSpecLike with GivenWhenThen with Matchers with Guic
       val portalLink = Link.toExternalPage.apply(url = "https://someurl", value = value)
 
       Then("the link should be rendered with title including a new window prompt")
-      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer">Pay £4,000 now - it's due<span class="visuallyhidden">link opens in a new window</span></a>"""
+      portalLink.toHtml.toString() shouldBe """<a href="https://someurl" target="_blank" data-sso="false" rel="external noopener noreferrer" lang="en">Pay £4,000 now - it's due<span class="visuallyhidden">link opens in a new window</span></a>"""
 
     }
   }
