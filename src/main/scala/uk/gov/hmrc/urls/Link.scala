@@ -46,6 +46,17 @@ case object ServerSso extends PossibleSso {
   override val value = "server"
 }
 
+trait PossibleLang {
+  protected val value: String
+  def toAttr: String = Link.attr("lang", value)
+}
+case object En extends PossibleLang {
+  override val value = "en"
+}
+case object Cy extends PossibleLang {
+  override val value = "cy"
+}
+
 case class Link(url: String,
                 value: Option[String],
                 id: Option[String] = None,
@@ -53,7 +64,8 @@ case class Link(url: String,
                 sso: PossibleSso = NoSso,
                 cssClasses: Option[String] = None,
                 dataAttributes: Option[Map[String, String]] = None,
-                hiddenInfo: Option[String] = None)(implicit messages: Messages) {
+                hiddenInfo: Option[String] = None,
+                lang: PossibleLang = En)(implicit messages: Messages) {
 
   import uk.gov.hmrc.urls.Link._
 
@@ -78,7 +90,7 @@ case class Link(url: String,
 
   val hiddenLink: String = hiddenSpanFor(hiddenInfo.orElse(target.hiddenInfo))
 
-  def toHtml: Html = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr$relAttr>$text$hiddenLink</a>")
+  def toHtml: Html = Html(s"<a$idAttr$hrefAttr${target.toAttr}${sso.toAttr}$cssAttr$dataAttr$relAttr${lang.toAttr}>$text$hiddenLink</a>")
 }
 
 object Link {
@@ -93,9 +105,10 @@ object Link {
               id: Option[String] = None,
               cssClasses: Option[String] = None,
               dataAttributes: Option[Map[String, String]] = None,
-              hiddenInfo: Option[String] = None)
+              hiddenInfo: Option[String] = None,
+              lang: PossibleLang = En)
              (implicit messages: Messages): Link =
-      Link(url, value, id, target, sso, cssClasses, dataAttributes, hiddenInfo)
+      Link(url, value, id, target, sso, cssClasses, dataAttributes, hiddenInfo, lang)
   }
 
   def toInternalPage: PreconfiguredLink = PreconfiguredLink(NoSso, SameWindow)
