@@ -16,6 +16,12 @@ limitations under the License.
 URL Builder
 ===========
 
+## This library is now deprecated.
+
+Either inline or create links in HTML. https://design-system.service.gov.uk/styles/typography/#links
+
+----------
+
 Micro-library for building URLs from templates and tags.
 
 * Creates links with settings that are appropriate to the target. See [Link](src/main/scala/uk/gov/hmrc/urls/Link.scala)'s companion object:
