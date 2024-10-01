@@ -17,7 +17,7 @@ URL Builder
 ===========
 
 ## This library is now deprecated.
-This library is no longer in usage you need to implement your own code to use this service.
+This library is no longer in usage.
 
 Either inline or create links in HTML. https://design-system.service.gov.uk/styles/typography/#links
 
